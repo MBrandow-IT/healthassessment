@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 
 import { getToken } from "@/actions/auth.actions";
 import Logout from "./shared/Logout";
+import Link from "next/link";
 
 const getHaInformation = async (
   grabAllInfo: boolean,
@@ -96,7 +97,6 @@ const Ha = () => {
 
   // Use firstDayOfMonth as needed
   useEffect(() => {
-    console.log(months);
     if (user?.userid) {
       getHaInformation(true, congregationID)
         .then((data) => {
@@ -108,19 +108,12 @@ const Ha = () => {
             monthData,
           ] = data;
 
-          console.log(sectionData);
-          console.log(questionData);
-          console.log(congregationData);
-          console.log(categoryData);
-          console.log(monthData);
-
           setSections(sectionData);
           setQuestionData(questionData);
           setCongregations(congregationData);
           setCategories(categoryData);
           setMonths(monthData);
           setSelectedMonth(monthData[0]);
-          console.log(congregations);
         })
         .catch((err) => {
           console.log(err); //remove this in production but it's usefull for now
@@ -129,12 +122,10 @@ const Ha = () => {
   }, [user, congregationID]);
 
   useEffect(() => {
-    console.log("Selected month changed: ", selectedMonth);
     if (user?.userid && selectedMonth) {
       getHaInformation(false, congregationID, selectedMonth.Fiscal_Period_ID)
         .then((data) => {
           const [qData] = data;
-          console.log("Updated question data: ", qData);
           setQuestionData(qData);
         })
         .catch((err) => {
@@ -245,11 +236,11 @@ const Ha = () => {
                                     key={j}
                                   >
                                     <th className=" text-left font-semibold">
-                                      <a
-                                        href={`/healthassessment/${Ministry_Question_ID}`}
+                                      <Link
+                                        href={`/ha/${Ministry_Question_ID}`}
                                       >
                                         {Question_Header}
-                                      </a>
+                                      </Link>
                                     </th>
                                     <td className="text-right">
                                       {Last_Months_Value}
