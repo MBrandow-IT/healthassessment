@@ -1,12 +1,8 @@
-import Ha from '@/components/HaDisplay'
-import React from 'react'
+import Ha from "@/components/HaDisplay";
+import React from "react";
 
 const HaPage = () => {
-  return (
-    <div>
-      <Ha />
-    </div>
-  )
-}
+  return <Ha />;
+};
 
-export default HaPage
+export default HaPage;

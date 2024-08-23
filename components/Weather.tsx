@@ -1,21 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 import { FaSun } from "react-icons/fa";
 
 const getUserLocation = async () => {
   const response = await fetch("https://geolocation-db.com/json/");
   return response.json();
-}
+};
 
 const getLocalWeather = async (location: any) => {
   const { latitude, longitude } = location;
-  const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m&temperature_unit=fahrenheit`);
+  const response = await fetch(
+    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m&temperature_unit=fahrenheit`
+  );
   return response.json();
-}
+};
 
-function Weather({rounded = "true"}) {
+function Weather({ rounded = "true" }) {
   const [temperature, setTemperature] = useState(null);
-  
+
   useEffect(() => {
     let mounted = true;
 
@@ -30,7 +32,7 @@ function Weather({rounded = "true"}) {
           setTemperature(temp);
         }
       } catch (error) {
-        console.error('Failed to retrieve weather or location', error);
+        console.error("Failed to retrieve weather or location", error);
       }
     };
 
@@ -43,13 +45,17 @@ function Weather({rounded = "true"}) {
 
   return (
     <>
-      {temperature && <div className="weather font-light">
-          <FaSun style={{ color: '#fdd835' }}/>
-            <p>{temperature}<sup>°F</sup></p>
+      {temperature && (
+        <div className="weather font-light">
+          <FaSun style={{ color: "#fdd835" }} />
+          <p>
+            {temperature}
+            <sup>°F</sup>
+          </p>
         </div>
-      }
+      )}
     </>
-  )
+  );
 }
 
 export default Weather;
